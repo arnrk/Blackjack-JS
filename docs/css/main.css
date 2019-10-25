@@ -1,0 +1,39 @@
+.body{
+    text-align: center;
+    width: 80%;
+}
+
+#table{
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    height: 65vh;
+    width: 90%;
+    background-color:green;
+    padding-left: 5%;
+    padding-right: 5%
+}
+
+h1 {
+    color: green;
+    text-align: center;
+    font-family: verdana;
+    font-size: 150%;
+  }
+
+  .mainButtons {
+    text-align: center;
+  }
+
+  .button {
+    background-color: #333;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+
+ 
