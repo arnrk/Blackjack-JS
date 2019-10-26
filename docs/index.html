@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./css/main.css" />
 </head>
 <body>
-        <div class ="maincontainer">
+        <div class ="mainContainer">
             <div class="mainButtons">    
                 <h1>Welcome To BlackJack!</h1>
                 <button class = "button" id="btn-play">Play</button>
@@ -16,10 +16,16 @@
                 <button class = "button" id="btn-stand">Stand</button>
                 <button class = "button" id="btn-double">Double</button>
                 <button class = "button" id="btn-restart">Restart</button>
+                <button class = "button" id="btn-wallet">Wallet</button>
            </div>
         </div>
-        <div id="table"></div>
-        <div id="text"></div>
+        <div class ="maincontainer">
+            <div class="displayArea" id="table"></div>
+        </div>
+        <div class ="mainContainer">
+            <div class="mainButtons" id="newButtons"></div>
+        </div>   
+       
     
   <script src="main.js"></script>
 </body>
