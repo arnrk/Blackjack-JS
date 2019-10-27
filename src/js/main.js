@@ -13,13 +13,13 @@ export default () => {
     const gameReset = document.getElementById("btn-restart")
 
     var playerName = window.prompt("Please Enter Your Name")
-    alert("WELCOME! " + playerName + " You Have: " + game.getUserChips() + " Chips! Press OK Then Play To Begin");
+    alert("Hi! " + playerName + " You Have: " + game.getUserChips() + " Chips! Press OK Then Start To Begin");
     
 
     playButton.onclick = function(){
         
         document.getElementById("table").innerHTML = `Your Available Chips: ${game.getUserChips()}`;
-        const wager = window.prompt("Enter Your Wager In Chips: ");
+        const wager = window.prompt(playerName + " Enter Your Wager In Chips: ");
         game.receiveAnte(wager);
         game.deal();
         document.getElementById("table").innerHTML = `Dealer Has: ${game.getDealerCardUp()} <br/> ${playerName} You Have: ${game.getUserHandValue()}`;
