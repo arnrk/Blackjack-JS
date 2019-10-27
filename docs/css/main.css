@@ -12,6 +12,7 @@
     background-color:green;
     padding-left: 5%;
     padding-right: 5%
+
 }
 
 h1 {
@@ -42,6 +43,16 @@ h1 {
     font-size: 100px;
     color: white;
     font-family: verdana;
+  }
+
+  .lineDisplayArea
+  {
+    text-align: center;
+    font-size: 20px;
+    color: rgb(12, 12, 12);
+    font-family: verdana;
+    padding-bottom: 1%;
+    padding-top: 1%;
   }
 
   .dropbtn {
