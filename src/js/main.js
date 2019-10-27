@@ -7,23 +7,22 @@ export default () => {
     const game = Blackjack.singleDeckGame;
     const gameIsRunning = true;
     
-    alert("WELCOME! You Have: " + game.getUserChips()+ " Chips"+ " Press OK Then Play Button To Begin");
+    alert("WELCOME! You Have: " + game.getUserChips()+ " Chips"+ " Press OK Then Play To Begin");
         
     const playButton = document.getElementById("btn-play");
     const hitButton = document.getElementById("btn-hit");
     const standButton = document.getElementById("btn-stand");
     const doubleButton = document.getElementById("btn-double");
     const myWalletButton = document.getElementById("btn-wallet");
-    const wagerShow = document.getElementById("wagerAmountDisplay");
-    const dealerShow = document.getElementById("dealerCards");
-    const playerShow = document.getElementById("yourCards");
-    const playerChoice = document.getElementById("youChoose");
     const gameResult = document.getElementById("gameResult");
+    const gameReset = document.getElementById("btn-restart")
+    
+    
 
     playButton.onclick = function(){
-
+        
         document.getElementById("table").innerHTML = `Your Available Chips: ${game.getUserChips()}`;
-        const wager = window.prompt("Enter your wager amount: ");
+        const wager = window.prompt("Enter Your Wager In Chips: ");
         game.receiveAnte(wager);
         game.deal();
         document.getElementById("table").innerHTML = `Dealer has: ${game.getDealerCardUp()} <br/> You have: ${game.getUserHandValue()}`;
@@ -32,8 +31,8 @@ export default () => {
 
 
     hitButton.onclick = function(){
-        game.hitUser();
         game.evaluateUser();
+        game.hitUser();
         document.getElementById("table").innerHTML = `Dealer has: ${game.getDealerCardUp()} <br/> You have: ${game.getUserHandValue()}`;
         if (game.isUserBust()){
 
@@ -49,10 +48,32 @@ export default () => {
         game.settleDealerHand();
     };
         
+    gameReset.onclick = function(){
+            window.location.reload(); //reloads current page
+    }
+    
+    standButton.onclick = function(){
+        game.standUser();
+        game.evaluateUser();
+        game.settleDealerHand();
+        document.getElementById("table").innerHTML = `Dealer Has: ${game.getDealerHandValue()}`;
+        if (game.isDealerBust()){
+
+            document.getElementById("table").innerHTML = `You Win!!! <br/> Dealer Has: ${game.getDealerHandValue()} <br/> You Have: ${game.getUserHandValue()}`;
+            game.settleDealerHand();
+            document.getElementById("table").innerHTML =`"You Win...<br/> Dealer Has: ${game.getDealerHandValue()} <br/> You Have: ${game.getUserHandValue()}`;
+            gameHistory.push("win");
+            game.resetAnte();
+            game.resetPlayers();
+    }
+        
+    }
 
 
     myWalletButton.onclick = function(){
-    document.getElementById("table").innerHTML = `Here is the total number of Chips you have available: ${game.getUserChips()}`;
+    document.getElementById("table").innerHTML = `Chips Available: ${game.getUserChips()}`;
        };
+    
+       
 
    };
