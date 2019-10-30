@@ -43,15 +43,15 @@ export default () => {
         if (game.evaluateUser() == 21){
             document.getElementById("table").innerHTML =`BlackJack!...<br/> Dealer Has: ${game.getDealerHandValue()} <br/> ${playerName} You Have: ${game.getUserHandValue()}`;
             gameHistory.push("blackjack");
-            game.receiveUserChips();
+            game.userWin();
         }
         
         if (game.isDealerBust() && !game.isUserBust()){
 
             document.getElementById("table").innerHTML =`You Won Baller!...<br/> Dealer Has: ${game.getDealerHandValue()} <br/> ${playerName} You Have: ${game.getUserHandValue()}`;
             gameHistory.push("win");
-            game.receiveUserChips(); //Adds a given number of chips to the Users chip count.
-            game.resetAnte();
+            game.userWin(); //Adds a given number of chips to the Users chip count.
+            
         }
 
         if (game.evaluateUser() < game.evaluateDealer() || game.isUserBust()) {
@@ -82,8 +82,8 @@ export default () => {
 
             document.getElementById("table").innerHTML =`You Won Baller!...<br/> Dealer Has: ${game.getDealerHandValue()} <br/> ${playerName} You Have: ${game.getUserHandValue()}`;
             gameHistory.push("win");
-            game.receiveUserChips(); //Adds a given number of chips to the Users chip count.
-            game.resetAnte();
+            game.userWin(); //Adds a given number of chips to the Users chip count.
+            
         }
 
         if (game.evaluateUser() < game.evaluateDealer() || game.isUserBust()) {
@@ -112,8 +112,8 @@ export default () => {
 
             document.getElementById("table").innerHTML =`You Won Baller!...<br/> Dealer Has: ${game.getDealerHandValue()} <br/> ${playerName} You Have: ${game.getUserHandValue()}`;
             gameHistory.push("win");
-            game.receiveUserChips(); //Adds a given number of chips to the Users chip count.
-            game.resetAnte();
+            game.userWin(); //Adds a given number of chips to the Users chip count.
+            
         }
 
         if (game.evaluateUser() < game.evaluateDealer() || game.isUserBust()) {
