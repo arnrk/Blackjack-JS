@@ -10,6 +10,9 @@ export default () => {
     const doubleButton = document.getElementById("btn-double");
     const myWalletButton = document.getElementById("btn-wallet");
     const gameReset = document.getElementById("btn-restart")
+    const lineDisplay = document.getElementById("lineDisplay")
+    const winDisplay = document.getElementById("winDisplay")
+
     var gameHistory = []
 
     var playerName = window.prompt("Please Enter Your Name")
@@ -27,55 +30,106 @@ export default () => {
 
     hitButton.onclick = function(){
         game.hitUser();
-        document.getElementById("table").innerHTML = `Dealer Has: ${game.getDealerCardUp()} <br/> ${playerName} You Have: ${game.getUserHandValue()}`;
-       
-        game.evaluateUser(); //Combines value of all cards and evaluates whether User hand is bust or not.
-        if (game.isUserBust()){
-
-            document.getElementById("table").innerHTML =`You lost...<br/> Dealer Has: ${game.getDealerHandValue()} <br/> ${playerName} You Have: ${game.getUserHandValue()}`;
-            gameHistory.push("lost");
-            game.resetAnte();
-            
-        }
-        
-        
+        game.isDealerPlaying();
+        game.getUserHandValue(); //Combines value of all cards and evaluates whether User hand is bust or not.
         game.settleDealerHand(); //Makes decisions for Dealers hand based on the current value of said hand.
         
+        if (game.evaluateUser() > 21){
+            document.getElementById("table").innerHTML =`Sorry You Busted!...<br/> ${playerName} You Have: ${game.getUserHandValue()}`;
+            gameHistory.push("loss");
+            game.resetAnte();
+        }
+
+        if (game.evaluateUser() == 21){
+            document.getElementById("table").innerHTML =`BlackJack!...<br/> Dealer Has: ${game.getDealerHandValue()} <br/> ${playerName} You Have: ${game.getUserHandValue()}`;
+            gameHistory.push("blackjack");
+            game.receiveUserChips();
+        }
+        
+        if (game.isDealerBust() && !game.isUserBust()){
+
+            document.getElementById("table").innerHTML =`You Won Baller!...<br/> Dealer Has: ${game.getDealerHandValue()} <br/> ${playerName} You Have: ${game.getUserHandValue()}`;
+            gameHistory.push("win");
+            game.receiveUserChips(); //Adds a given number of chips to the Users chip count.
+            game.resetAnte();
+        }
+
+        if (game.evaluateUser() < game.evaluateDealer() || game.isUserBust()) {
+            document.getElementById("table").innerHTML =`You Lost This Round!...<br/> Dealer Has: ${game.getDealerHandValue()} <br/> ${playerName} You Have: ${game.getUserHandValue()}`;
+            gameHistory.push("loss");
+            game.resetAnte();
+        }
+
+        if (game.evaluateUser() === game.evaluateDealer()) {
+            document.getElementById("table").innerHTML =`You Pushed This Round!...<br/> Dealer Has: ${game.getDealerHandValue()} <br/> ${playerName} You Have: ${game.getUserHandValue()}`;
+            gameHistory.push("push");
+            game.resetAnte();
+        }
+        
+        game.resetPlayers();
+        
     };
+
+       
         
 
     standButton.onclick = function(){
         game.standUser(); //Sets value of Player playing to false
-        game.settleDealerHand(); 
-
         game.evaluateUser(); 
-        if (game.isDealerBust()){
+        game.settleDealerHand(); 
+        
+        if (game.isDealerBust() && !game.isUserBust()){
 
-            document.getElementById("table").innerHTML = `You Win!!! <br/> Dealer Has: ${game.getDealerHandValue()} <br/> ${playerName} You Have: ${game.getUserHandValue()}`;
-            game.receiveUserChips(); //Adds a given number of chips to the Users chip count.
+            document.getElementById("table").innerHTML =`You Won Baller!...<br/> Dealer Has: ${game.getDealerHandValue()} <br/> ${playerName} You Have: ${game.getUserHandValue()}`;
             gameHistory.push("win");
-            game.userWin()
+            game.receiveUserChips(); //Adds a given number of chips to the Users chip count.
+            game.resetAnte();
         }
-        game.settleDealerHand();
-        game.resetPlayer(); //Sets value of Player playing to true
-        document.getElementById("table").innerHTML = `Dealer Has: ${game.getDealerHandValue()} <br/> ${playerName} You Have: ${game.getUserHandValue()}`;
+
+        if (game.evaluateUser() < game.evaluateDealer() || game.isUserBust()) {
+            document.getElementById("table").innerHTML =`You Lost This Round!...<br/> Dealer Has: ${game.getDealerHandValue()} <br/> ${playerName} You Have: ${game.getUserHandValue()}`;
+            gameHistory.push("loss");
+            game.resetAnte();
+        }
+
+        if (game.evaluateUser() === game.evaluateDealer()) {
+            document.getElementById("table").innerHTML =`You Pushed This Round!...<br/> Dealer Has: ${game.getDealerHandValue()} <br/> ${playerName} You Have: ${game.getUserHandValue()}`;
+            gameHistory.push("push");
+            game.resetAnte();
+        }
+        
+        game.resetPlayers();
+        
     };
 
     
     doubleButton.onclick = function(){
         game.doubleUser();
-        game.settleDealerHand()
+        game.evaluateUser();
+        game.settleDealerHand(); 
         
-        game.evaluateUser(); 
-        if (game.isDealerBust()){
+        if (game.isDealerBust() && !game.isUserBust()){
 
-            document.getElementById("table").innerHTML = `You Win!!! <br/> Dealer Has: ${game.getDealerHandValue()} <br/> ${playerName} You Have: ${game.getUserHandValue()}`;
-            game.receiveUserChips(); 
+            document.getElementById("table").innerHTML =`You Won Baller!...<br/> Dealer Has: ${game.getDealerHandValue()} <br/> ${playerName} You Have: ${game.getUserHandValue()}`;
             gameHistory.push("win");
-            game.userWin()
+            game.receiveUserChips(); //Adds a given number of chips to the Users chip count.
+            game.resetAnte();
         }
-       
-        game.settleDealerHand();
+
+        if (game.evaluateUser() < game.evaluateDealer() || game.isUserBust()) {
+            document.getElementById("table").innerHTML =`You Lost This Round!...<br/> Dealer Has: ${game.getDealerHandValue()} <br/> ${playerName} You Have: ${game.getUserHandValue()}`;
+            gameHistory.push("loss");
+            game.resetAnte();
+        }
+
+        if (game.evaluateUser() === game.evaluateDealer()) {
+            document.getElementById("table").innerHTML =`You Pushed This Round!...<br/> Dealer Has: ${game.getDealerHandValue()} <br/> ${playerName} You Have: ${game.getUserHandValue()}`;
+            gameHistory.push("push");
+            game.resetAnte();
+        }
+        
+        game.resetPlayers();
+        
     };
     
 
